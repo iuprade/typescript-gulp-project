@@ -7,8 +7,12 @@ module app.demo {
     export interface IDemoCtrl {}
     export class DemoCtrl implements IDemoCtrl {
         constructor(
-            public $scope: ng.IScope
-        ){}
+            public $scope: ng.IScope,
+            public $log: ng.ILogService
+        ){
+            $log.debug('debug log from controller !!! ');
+            $log.info('info log from controller !!! ');
+        }
     }
 
     export interface IDemoService {
@@ -28,5 +32,10 @@ module app.demo {
             };
         })
         .controller("demoCtrl", DemoCtrl)
+        .config(configure)
         .factory("demoService", [() => new app.demo.DemoService()]);
+
+    function configure($logProvider: ng.ILogProvider) {
+            $logProvider.debugEnabled(false);
+    }
 }
